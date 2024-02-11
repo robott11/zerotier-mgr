@@ -1,0 +1,29 @@
+#!/usr/bin/php
+<?php
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Minicli\App;
+use Minicli\Exception\CommandNotFoundException;
+
+$app = new App();
+
+$app->setSignature('./zerotier-mgr --help');
+
+try {
+    $app->runCommand($argv);
+} 
+
+catch (CommandNotFoundException $e) {
+    echo 'An error occurred running the command: ',  $e->getMessage(), PHP_EOL;
+    exit;
+}
+
+catch (Exception $e) {
+    echo 'Fatal Error: ', $e->getMessage(), PHP_EOL;
+    exit;
+}
