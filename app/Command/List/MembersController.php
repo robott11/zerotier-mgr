@@ -2,6 +2,7 @@
 
 namespace App\Command\List;
 
+use Carbon\Carbon;
 use Minicli\Command\CommandController;
 use Minicli\Output\Helper\TableHelper;
 
@@ -19,7 +20,7 @@ class MembersController extends CommandController
 
         $members = $this->app->zeroTier->getMembers($network);
 
-        $this->display('MEMBER FROM ' . $network . ' NETWORK');
+        $this->display('MEMBERS FROM ' . $network . ' NETWORK');
         $this->printMembersTable($members);
     }
 
@@ -39,7 +40,7 @@ class MembersController extends CommandController
                 (string)$member->name,
                 $member->config->authorized ? 'YES' : 'NO',
                 $managed_ips,
-                (string)$member->lastSeen,
+                Carbon::createFromTimestampMs($member->lastSeen)->diffForHumans(),
                 (string)$member->physicalAddress
             ]);
         }
