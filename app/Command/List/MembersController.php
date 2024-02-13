@@ -27,7 +27,7 @@ class MembersController extends CommandController
     private function printMembersTable(array $members): void
     {
         $table = new TableHelper();
-        $table->addHeader(['ID', 'NAME', 'AUTHORIZED', 'MANAGED IPS', 'LAST SEEN', 'PHYSICAL IP']);
+        $table->addHeader(['ID', 'ADDRESS', 'NAME', 'AUTHORIZED', 'MANAGED IPS', 'LAST SEEN', 'PHYSICAL IP']);
 
         foreach ($members as $member) {
             $managed_ips =  '';
@@ -36,6 +36,7 @@ class MembersController extends CommandController
             }
 
             $table->addRow([
+                (string)$member->id,
                 (string)$member->config->id,
                 (string)$member->name,
                 $member->config->authorized ? 'YES' : 'NO',
@@ -49,3 +50,4 @@ class MembersController extends CommandController
         $this->newline();
     }
 }
+

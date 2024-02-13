@@ -30,3 +30,4 @@ catch (Exception $e) {
     echo 'Fatal Error: ', $e->getMessage(), PHP_EOL;
     exit;
 }
+
