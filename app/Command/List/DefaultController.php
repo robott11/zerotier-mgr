@@ -9,7 +9,7 @@ class DefaultController extends CommandController
 {
     public function handle(): void
     {
-        $networks = $this->app->zeroTier->getNetwork();
+        $networks = $this->app->zeroTier->getNetworks();
         
         $table = new TableHelper();
         $table->addHeader(['ID', 'NOME']);

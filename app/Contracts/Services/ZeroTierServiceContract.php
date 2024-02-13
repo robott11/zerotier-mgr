@@ -6,5 +6,5 @@ use Minicli\ServiceInterface;
 
 interface ZeroTierServiceContract extends ServiceInterface
 {
-    public function getNetwork(): array;
+    public function getNetworks(): array;
 }
