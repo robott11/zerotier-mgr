@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 if (php_sapi_name() !== 'cli') {
@@ -15,7 +15,7 @@ $dotenv->load();
 
 $app = new App();
 
-$app->setSignature('./zerotier-mgr --help');
+$app->setSignature('./zerotier-mgr help');
 
 try {
     $app->runCommand($argv);
