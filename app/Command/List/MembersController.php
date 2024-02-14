@@ -27,8 +27,9 @@ class MembersController extends CommandController
     private function printMembersTable(array $members): void
     {
         $table = new TableHelper();
-        $table->addHeader(['ID', 'NAME', 'AUTHORIZED', 'MANAGED IPS', 'LAST SEEN', 'PHYSICAL IP']);
+        $table->addHeader(['#', 'ID', 'NAME', 'AUTHORIZED', 'MANAGED IPS', 'LAST SEEN', 'PHYSICAL IP']);
 
+        $member_count = 1;
         foreach ($members as $member) {
             $managed_ips =  '';
             foreach ($member->config->ipAssignments as $ip) {
@@ -36,6 +37,7 @@ class MembersController extends CommandController
             }
 
             $table->addRow([
+                (string)$member_count,
                 (string)$member->config->id,
                 (string)$member->name,
                 $member->config->authorized ? 'YES' : 'NO',
@@ -43,6 +45,8 @@ class MembersController extends CommandController
                 Carbon::createFromTimestampMs($member->lastSeen)->diffForHumans(),
                 (string)$member->physicalAddress
             ]);
+
+            $member_count++;
         }
 
         $this->rawOutput($table->getFormattedTable());
