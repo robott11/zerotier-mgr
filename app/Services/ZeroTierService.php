@@ -38,5 +38,18 @@ class ZeroTierService implements ZeroTierServiceContract
             $this->client->get('network/' . $network . '/member')->getBody()->getContents()
         );
     }
-}
 
+    public function authorizeMember(string $network, string $member): bool
+    {
+        return $this->updateMember($network, $member, [
+            'config' => [ 'authorized' => true ]
+        ]);
+    }
+
+    private function updateMember(string $network, string $member, array $data): bool
+    {
+        return $this->client->request('POST', 'network/' . $network . '/member/' . $member, [
+            'json' => $data
+        ])->getStatusCode() === 200 ? true : false;
+    }
+}
